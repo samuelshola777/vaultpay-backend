@@ -17,11 +17,11 @@ public class KeepAliveScheduler {
 
     private static final Logger log =
             LoggerFactory.getLogger(KeepAliveScheduler.class);
-    @Value("${app.backend.base-url}")
-    private static String backendBaseUrl;
+    @Value("${app.paystack.callback-url}")
+    private String backendBaseUrl;
 
     private static final String KEEP_ALIVE_URL =
-            backendBaseUrl+"/api/v1/system/keep-alive";
+            "https://vaultpay-backend-hwoq.onrender.com/api/v1/system/keep-alive";
 
     private final HttpClient httpClient;
 
