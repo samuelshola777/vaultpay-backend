@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "VaultPay API",
+    "description": "Core VaultPay authentication, wallet, transfer, funding and withdrawal requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {"key": "baseUrl", "value": "http://localhost:8080"},
+    {"key": "accessToken", "value": ""},
+    {"key": "refreshToken", "value": ""},
+    {"key": "walletNumber", "value": ""},
+    {"key": "beneficiaryId", "value": ""},
+    {"key": "paymentReference", "value": ""}
+  ],
+  "auth": {"type": "bearer", "bearer": [{"key": "token", "value": "{{accessToken}}", "type": "string"}]},
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {"auth": {"type": "noauth"}, "method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"firstName\": \"Samuel\",\n  \"lastName\": \"Shola\",\n  \"email\": \"samuel@example.com\",\n  \"password\": \"StrongPassword123!\",\n  \"phoneNumber\": \"+2349000000000\"\n}"}, "url": "{{baseUrl}}/api/v1/users/public/register"}
+        },
+        {
+          "name": "Login",
+          "event": [{"listen": "test", "script": {"exec": ["const body = pm.response.json();", "if (body.data) {", "  pm.collectionVariables.set('accessToken', body.data.accessToken);", "  pm.collectionVariables.set('refreshToken', body.data.refreshToken);", "}"]}}],
+          "request": {"auth": {"type": "noauth"}, "method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"email\": \"samuel@example.com\",\n  \"password\": \"StrongPassword123!\"\n}"}, "url": "{{baseUrl}}/api/v1/users/public/login"}
+        },
+        {
+          "name": "Refresh Token",
+          "request": {"auth": {"type": "noauth"}, "method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"refreshToken\": \"{{refreshToken}}\"\n}"}, "url": "{{baseUrl}}/api/v1/users/public/refresh-token"}
+        },
+        {"name": "Logout", "request": {"method": "POST", "url": "{{baseUrl}}/api/v1/users/private/logout"}}
+      ]
+    },
+    {
+      "name": "Wallet and Transfers",
+      "item": [
+        {"name": "My Wallet", "request": {"method": "GET", "url": "{{baseUrl}}/api/v1/wallets/private/me"}},
+        {
+          "name": "Wallet Transfer",
+          "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Idempotency-Key", "value": "{{$guid}}"}], "body": {"mode": "raw", "raw": "{\n  \"destinationWalletNumber\": \"{{walletNumber}}\",\n  \"amount\": 1000.00,\n  \"currency\": \"NGN\",\n  \"narration\": \"Test transfer\",\n  \"pin\": \"1234\"\n}"}, "url": "{{baseUrl}}/api/v1/transfers/private/wallet"}
+        },
+        {"name": "Transaction History", "request": {"method": "GET", "url": "{{baseUrl}}/api/v1/transactions/private?page=1&size=20"}}
+      ]
+    },
+    {
+      "name": "Funding and Withdrawals",
+      "item": [
+        {
+          "name": "Initialize Funding",
+          "event": [{"listen": "test", "script": {"exec": ["const body = pm.response.json();", "if (body.data) pm.collectionVariables.set('paymentReference', body.data.reference);"]}}],
+          "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"amount\": 5000.00,\n  \"currency\": \"NGN\"\n}"}, "url": "{{baseUrl}}/api/v1/payments/private/fund"}
+        },
+        {"name": "Verify Funding", "request": {"method": "POST", "url": "{{baseUrl}}/api/v1/payments/private/verify/{{paymentReference}}"}},
+        {"name": "List Banks", "request": {"method": "GET", "url": "{{baseUrl}}/api/v1/beneficiaries/private/banks"}},
+        {
+          "name": "Create Beneficiary",
+          "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}], "body": {"mode": "raw", "raw": "{\n  \"accountNumber\": \"0123456789\",\n  \"bankCode\": \"058\",\n  \"bankName\": \"Guaranty Trust Bank\"\n}"}, "url": "{{baseUrl}}/api/v1/beneficiaries/private"}
+        },
+        {
+          "name": "Withdraw",
+          "request": {"method": "POST", "header": [{"key": "Content-Type", "value": "application/json"}, {"key": "Idempotency-Key", "value": "{{$guid}}"}], "body": {"mode": "raw", "raw": "{\n  \"beneficiaryId\": \"{{beneficiaryId}}\",\n  \"amount\": 1000.00,\n  \"currency\": \"NGN\",\n  \"pin\": \"1234\",\n  \"narration\": \"Test withdrawal\"\n}"}, "url": "{{baseUrl}}/api/v1/withdrawals/private"}
+        }
+      ]
+    }
+  ]
+}

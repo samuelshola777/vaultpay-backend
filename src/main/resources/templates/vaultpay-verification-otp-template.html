@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify your VaultPay account</title>
+</head>
+
+<body style="margin:0; padding:0; background:#eef5f3;
+             font-family:Arial, Helvetica, sans-serif; color:#15332d;">
+
+<!-- Email preview text -->
+<div style="display:none; max-height:0; overflow:hidden; opacity:0;">
+    Your VaultPay verification code is ready.
+</div>
+
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+       style="background:#eef5f3; padding:40px 16px;">
+    <tr>
+        <td align="center">
+
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                   style="max-width:580px; background:#ffffff; border-radius:20px;
+                          overflow:hidden; box-shadow:0 12px 40px rgba(13,79,67,0.10);">
+
+                <!-- Brand header -->
+                <tr>
+                    <td style="padding:28px 34px; background:#073f36;">
+                        <table role="presentation" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td>
+                                    <div style="width:42px; height:42px; line-height:42px;
+                                                border-radius:12px; background:#ffffff;
+                                                color:#0d5f50; text-align:center;
+                                                font-size:22px; font-weight:bold;">
+                                        V
+                                    </div>
+                                </td>
+
+                                <td style="padding-left:12px;">
+                                    <div style="font-size:23px; font-weight:bold;
+                                                color:#ffffff;">
+                                        VaultPay
+                                    </div>
+                                    <div style="margin-top:3px; font-size:12px;
+                                                color:#a9d8cf;">
+                                        Simple. Secure. Reliable.
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <!-- Main content -->
+                <tr>
+                    <td style="padding:42px 38px 34px;">
+
+                        <div style="width:54px; height:54px; line-height:54px;
+                                    border-radius:50%; background:#e8f7f3;
+                                    color:#0d5f50; text-align:center;
+                                    font-size:25px; font-weight:bold;">
+                            ✓
+                        </div>
+
+                        <h1 style="margin:24px 0 12px; font-size:28px;
+                                   line-height:36px; color:#102e29;">
+                            Verify your email
+                        </h1>
+
+                        <p style="margin:0 0 14px; font-size:16px;
+                                  line-height:26px; color:#405b56;">
+                            Hello
+                            <strong th:text="${firstName}"
+                                    style="color:#102e29;">Samuel</strong>,
+                        </p>
+
+                        <p style="margin:0; font-size:16px; line-height:26px;
+                                  color:#60736f;">
+                            Welcome to VaultPay. Use the code below to verify
+                            your email and activate your account.
+                        </p>
+
+                        <!-- OTP card -->
+                        <table role="presentation" width="100%" cellpadding="0"
+                               cellspacing="0" style="margin:30px 0;">
+                            <tr>
+                                <td align="center"
+                                    style="padding:25px 16px; background:#f0faf7;
+                                           border:1px solid #c8e9e1;
+                                           border-radius:14px;">
+
+                                    <div style="margin-bottom:12px; font-size:11px;
+                                                font-weight:bold; letter-spacing:2px;
+                                                color:#61847c;">
+                                        VERIFICATION CODE
+                                    </div>
+
+                                    <div th:text="${otp}"
+                                         style="font-size:38px; line-height:46px;
+                                                font-weight:bold; letter-spacing:11px;
+                                                color:#075e4f;">
+                                        123456
+                                    </div>
+
+                                    <div style="margin-top:12px; font-size:13px;
+                                                color:#708580;">
+                                        Expires in
+                                        <strong th:text="${otpExpirationMinutes}"
+                                                style="color:#0d5f50;">10</strong>
+                                        minutes
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <!-- Security notice -->
+                        <table role="presentation" width="100%" cellpadding="0"
+                               cellspacing="0">
+                            <tr>
+                                <td style="padding:16px 18px; background:#fff8e8;
+                                           border-left:4px solid #f2b84b;
+                                           border-radius:8px; font-size:13px;
+                                           line-height:21px; color:#72551e;">
+                                    <strong>Security notice:</strong>
+                                    Never share this code with anyone. VaultPay
+                                    will never ask for your OTP by phone, message
+                                    or social media.
+                                </td>
+                            </tr>
+                        </table>
+
+                        <p style="margin:28px 0 0; font-size:14px;
+                                  line-height:23px; color:#71837f;">
+                            If you did not create a VaultPay account, you can
+                            safely ignore this email.
+                        </p>
+
+                        <p style="margin:24px 0 0; font-size:15px;
+                                  line-height:24px; color:#405b56;">
+                            Warm regards,<br>
+                            <strong style="color:#0d5f50;">The VaultPay Team</strong>
+                        </p>
+                    </td>
+                </tr>
+
+                <!-- Footer -->
+                <tr>
+                    <td align="center"
+                        style="padding:24px; background:#f7faf9;
+                               border-top:1px solid #e2ece9;">
+
+                        <p style="margin:0; font-size:12px; line-height:20px;
+                                  color:#81918e;">
+                            © <span th:text="${year}">2026</span> VaultPay.
+                            All rights reserved.
+                        </p>
+
+                        <p style="margin:5px 0 0; font-size:11px;
+                                  color:#a0adab;">
+                            This is an automated security email. Please do not reply.
+                        </p>
+                    </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

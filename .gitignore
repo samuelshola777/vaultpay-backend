@@ -1,0 +1,19 @@
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Build output
+target/
+
+# Environment variables and secrets
+.env
+.env.*
+env.properties
+**/env.properties
+
+# Logs
+*.log
+
+# Operating system files
+.DS_Store

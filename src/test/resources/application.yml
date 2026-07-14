@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:vaultpay;MODE=PostgreSQL;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  mail:
+    host: localhost
+
+app:
+  jwt:
+    secret: dGVzdC1zZWNyZXQtdGhhdC1pcy1hdC1sZWFzdC0zMi1ieXRlcw==
+    expiration-ms: 3600000
+  mail:
+    from: test@vaultpay.local
+  otp:
+    expiration-minutes: 10
+  transaction:
+    daily-transfer-limit: 1000000.00
+    withdrawal-fee: 50.00
+  paystack:
+    base-url: https://api.paystack.co
+    secret-key: test-secret
+    callback-url: http://localhost/test-callback

@@ -1,0 +1,109 @@
+spring:
+  config:
+    import: optional:file:./env.properties
+
+  application:
+    name: vaultpay
+
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: ${DB_MAX_POOL_SIZE:10}
+      minimum-idle: ${DB_MINIMUM_IDLE:2}
+      connection-timeout: ${DB_CONNECTION_TIMEOUT:30000}
+
+  jpa:
+    hibernate:
+      ddl-auto: ${DDL_AUTO:update}
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: ${FORMAT_SQL:true}
+        jdbc:
+          time_zone: UTC
+
+  jackson:
+    default-property-inclusion: non_null
+
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+
+logging:
+  pattern:
+    level: "%5p [correlationId:%X{correlationId:-system}]"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      probes:
+        enabled: true
+      show-details: when-authorized
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+
+app:
+  jwt:
+    secret: ${JWT_SECRET}
+    expiration-ms: ${JWT_EXPIRATION_MS}
+    refresh-expiration-ms: ${JWT_REFRESH_EXPIRATION_MS}
+
+  mail:
+    from: ${MAIL_FROM}
+
+  otp:
+    expiration-minutes: ${OTP_EXPIRATION_MINUTES}
+
+  transaction:
+    minimum-transfer: ${MINIMUM_TRANSFER}
+    maximum-transfer: ${MAXIMUM_TRANSFER}
+    daily-transfer-limit: ${DAILY_TRANSFER_LIMIT}
+    minimum-funding: ${MINIMUM_FUNDING}
+    maximum-funding: ${MAXIMUM_FUNDING}
+    minimum-withdrawal: ${MINIMUM_WITHDRAWAL}
+    maximum-withdrawal: ${MAXIMUM_WITHDRAWAL}
+    daily-withdrawal-limit: ${DAILY_WITHDRAWAL_LIMIT}
+    withdrawal-fee: ${WITHDRAWAL_FEE}
+
+  paystack:
+    base-url: ${PAYSTACK_BASE_URL}
+    secret-key: ${PAYSTACK_SECRET_KEY}
+    callback-url: ${PAYSTACK_CALLBACK_URL}
+
+  admin:
+    email: ${DEFAULT_ADMIN_EMAIL}
+    password: ${DEFAULT_ADMIN_PASSWORD}
+
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS}
+
+  security:
+    max-login-attempts: ${MAX_LOGIN_ATTEMPTS}
+    login-lock-minutes: ${LOGIN_LOCK_MINUTES}
+    rate-limit-requests: ${RATE_LIMIT_REQUESTS}
+    rate-limit-window-seconds: ${RATE_LIMIT_WINDOW_SECONDS}
+
+  reconciliation:
+    fixed-delay-ms: ${RECONCILIATION_FIXED_DELAY_MS}
+    pending-age-minutes: ${RECONCILIATION_PENDING_AGE_MINUTES}
