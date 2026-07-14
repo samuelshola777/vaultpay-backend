@@ -107,3 +107,6 @@ app:
   reconciliation:
     fixed-delay-ms: ${RECONCILIATION_FIXED_DELAY_MS}
     pending-age-minutes: ${RECONCILIATION_PENDING_AGE_MINUTES}
+
+  backend:
+    base-url: ${BACKEND-BASEURL}
